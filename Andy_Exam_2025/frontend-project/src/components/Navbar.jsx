@@ -15,20 +15,22 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-indigo-600 text-white p-4 shadow-lg mb-6">
+        <nav className="bg-charcoal text-white py-5 px-8 shadow-2xl mb-8 border-b-4 border-emerald">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/dashboard" className="text-2xl font-bold italic tracking-tighter text-indigo-100 hover:text-white transition">SmartPark <span className="text-white">EPMS</span></Link>
-                <div className="space-x-6 flex items-center text-sm font-medium">
-                    <Link to="/dashboard" className="hover:text-indigo-200 transition">Dashboard</Link>
-                    <Link to="/employee" className="hover:text-indigo-200 transition">Employees</Link>
-                    <Link to="/department" className="hover:text-indigo-200 transition">Departments</Link>
-                    <Link to="/salary" className="hover:text-indigo-200 transition">Salaries</Link>
-                    <Link to="/reports" className="hover:text-indigo-200 transition">Reports</Link>
+                <Link to="/dashboard" className="text-2xl font-black italic tracking-tighter hover:text-emerald transition">
+                    SmartPark <span className="text-emerald not-italic font-extrabold uppercase ml-1">EPMS</span>
+                </Link>
+                <div className="space-x-8 flex items-center text-sm font-bold uppercase tracking-widest">
+                    <Link to="/dashboard" className="hover:text-emerald transition border-b-2 border-transparent hover:border-emerald pb-1">Dashboard</Link>
+                    <Link to="/employee" className="hover:text-emerald transition border-b-2 border-transparent hover:border-emerald pb-1">Employees</Link>
+                    <Link to="/department" className="hover:text-emerald transition border-b-2 border-transparent hover:border-emerald pb-1">Departments</Link>
+                    <Link to="/salary" className="hover:text-emerald transition border-b-2 border-transparent hover:border-emerald pb-1">Salaries</Link>
+                    <Link to="/reports" className="hover:text-emerald transition border-b-2 border-transparent hover:border-emerald pb-1">Reports</Link>
                     <button
                         onClick={handleLogout}
-                        className="bg-white text-indigo-600 px-4 py-1 rounded hover:bg-indigo-100 transition font-medium"
+                        className="bg-emerald text-white px-6 py-2 rounded-lg hover:brightness-110 transition shadow-lg shadow-emerald/20 font-black text-xs"
                     >
-                        Logout
+                        Sign Out
                     </button>
                 </div>
             </div>
