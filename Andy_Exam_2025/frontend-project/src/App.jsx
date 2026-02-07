@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Login from './components/Login';
-import Dashboard from './components/Dashboard';
-import Employee from './components/Employee';
-import Department from './components/Department';
-import Salary from './components/Salary';
-import Reports from './components/Reports';
+import Login from './components/Login.jsx';
+import Dashboard from './components/Dashboard.jsx';
+import Employee from './components/Employee.jsx';
+import Department from './components/Department.jsx';
+import Salary from './components/Salary.jsx';
+import Reports from './components/Reports.jsx';
 import './App.css';
 
 function App() {
