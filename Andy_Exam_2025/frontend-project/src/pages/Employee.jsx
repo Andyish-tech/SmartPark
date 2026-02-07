@@ -36,13 +36,13 @@ const Employee = () => {
     };
 
     return (
-        <div className="max-w-6xl mx-auto py-6">
+        <div className="max-w-6xl mx-auto py-6 px-4 lg:px-0">
             <div className="mb-12 border-b-2 border-charcoal/5 pb-6">
                 <h1 className="text-4xl font-black text-charcoal uppercase tracking-tighter">Workforce <span className="text-emerald italic">Directory</span></h1>
                 <p className="text-charcoal/40 font-bold uppercase tracking-widest text-[10px] mt-1">Portfolio of Active Human Capital</p>
             </div>
 
-            <div className="bg-white p-10 rounded-[40px] shadow-2xl shadow-charcoal/5 border border-charcoal/5 mb-12">
+            <div className="bg-white p-6 lg:p-10 rounded-[40px] shadow-2xl shadow-charcoal/5 border border-charcoal/5 mb-12">
                 <h2 className="text-xl font-black text-charcoal mb-8 border-l-4 border-emerald pl-4 uppercase tracking-tight">Onboard New Personnel</h2>
                 <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="space-y-1">
@@ -92,28 +92,30 @@ const Employee = () => {
             </div>
 
             <div className="bg-white rounded-[40px] shadow-2xl shadow-charcoal/5 border border-charcoal/5 overflow-hidden">
-                <table className="w-full text-left whitespace-nowrap">
-                    <thead className="bg-gray-50 border-b border-charcoal/5">
-                        <tr>
-                            <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Staff Ident</th>
-                            <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Full Professional Name</th>
-                            <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Rank</th>
-                            <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Portfolio</th>
-                            <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Tenure Start</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                        {employees.map((emp) => (
-                            <tr key={emp.employeeNumber} className="hover:bg-softlime/5 transition-colors group">
-                                <td className="p-6 font-mono text-xs font-bold text-charcoal/60">{emp.employeeNumber}</td>
-                                <td className="p-6 font-black text-charcoal group-hover:text-emerald transition-colors">{emp.firstName} {emp.lastName}</td>
-                                <td className="p-6 text-charcoal font-medium italic">{emp.position}</td>
-                                <td className="p-6"><span className="bg-emerald/10 text-emerald px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">{emp.departmentName}</span></td>
-                                <td className="p-6 text-charcoal/40 text-[11px] font-bold">{new Date(emp.hiredDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left whitespace-nowrap">
+                        <thead className="bg-gray-50 border-b border-charcoal/5">
+                            <tr>
+                                <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Staff Ident</th>
+                                <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Full Professional Name</th>
+                                <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Rank</th>
+                                <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Portfolio</th>
+                                <th className="p-6 font-black text-charcoal/40 uppercase tracking-widest text-[10px]">Tenure Start</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50">
+                            {employees.map((emp) => (
+                                <tr key={emp.employeeNumber} className="hover:bg-softlime/5 transition-colors group">
+                                    <td className="p-6 font-mono text-xs font-bold text-charcoal/60">{emp.employeeNumber}</td>
+                                    <td className="p-6 font-black text-charcoal group-hover:text-emerald transition-colors">{emp.firstName} {emp.lastName}</td>
+                                    <td className="p-6 text-charcoal font-medium italic">{emp.position}</td>
+                                    <td className="p-6"><span className="bg-emerald/10 text-emerald px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">{emp.departmentName}</span></td>
+                                    <td className="p-6 text-charcoal/40 text-[11px] font-bold">{new Date(emp.hiredDate).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

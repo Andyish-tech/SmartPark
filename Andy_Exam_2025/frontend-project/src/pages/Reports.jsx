@@ -130,22 +130,22 @@ const Reports = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto py-6">
-            <div className="mb-12 flex justify-between items-end border-b-2 border-charcoal/5 pb-8">
+        <div className="max-w-5xl mx-auto py-6 px-4 lg:px-0">
+            <div className="mb-12 flex flex-col md:flex-row justify-between items-start md:items-end border-b-2 border-charcoal/5 pb-8 gap-6">
                 <div>
-                    <h1 className="text-4xl font-black text-charcoal uppercase tracking-tighter">Executive <span className="text-emerald italic">Analytics</span></h1>
+                    <h1 className="text-3xl lg:text-4xl font-black text-charcoal uppercase tracking-tighter">Executive <span className="text-emerald italic">Analytics</span></h1>
                     <p className="text-charcoal/40 font-bold uppercase tracking-widest text-[10px] mt-2">Strategic Payroll Audit Portfolio</p>
                 </div>
-                <div className="flex gap-4">
+                <div className="flex flex-wrap gap-4 w-full md:w-auto">
                     <button
-                        className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center gap-2 px-4 py-2 bg-emerald/5 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed"
+                        className="flex-1 md:flex-none text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center justify-center gap-2 px-4 py-3 bg-emerald/5 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed"
                         onClick={handleExportExcel}
                         disabled={data.length === 0}
                     >
-                        <FontAwesomeIcon icon={faFileExcel} /> Export to Excel
+                        <FontAwesomeIcon icon={faFileExcel} /> Export Excel
                     </button>
-                    <button className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center gap-2 px-4 py-2 bg-emerald/5 rounded-lg" onClick={() => window.print()}>
-                        <FontAwesomeIcon icon={faFileExport} /> Export Statement
+                    <button className="flex-1 md:flex-none text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center justify-center gap-2 px-4 py-3 bg-emerald/5 rounded-lg" onClick={() => window.print()}>
+                        <FontAwesomeIcon icon={faFileExport} /> Export PDF
                     </button>
                 </div>
             </div>
@@ -174,22 +174,22 @@ const Reports = () => {
 
             {data.length > 0 ? (
                 <div className="bg-white rounded-[40px] shadow-[0_40px_100px_rgba(0,0,0,0.08)] border border-charcoal/5 overflow-hidden print:border-none print:shadow-none">
-                    <div className="p-10 bg-charcoal text-white flex justify-between items-center relative overflow-hidden">
+                    <div className="p-6 lg:p-10 bg-charcoal text-white flex flex-col sm:flex-row sm:justify-between sm:items-center relative overflow-hidden gap-6">
                         <div className="absolute top-0 right-0 w-64 h-64 bg-emerald/10 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                         <div className="relative z-10">
-                            <h2 className="text-2xl font-black uppercase tracking-tight flex items-center gap-3">
+                            <h2 className="text-xl lg:text-2xl font-black uppercase tracking-tight flex items-center gap-3">
                                 <FontAwesomeIcon icon={faChartPie} className="text-emerald" /> Payroll Summary Report
                             </h2>
                             <p className="opacity-40 text-[10px] font-black uppercase tracking-[0.4em] mt-3">Period Ending: <span className="text-emerald">{month}</span></p>
                         </div>
-                        <div className="text-right relative z-10">
-                            <div className="text-3xl font-black italic tracking-tighter">Elite <span className="text-emerald">Series</span></div>
-                            <div className="text-[10px] opacity-30 uppercase font-black tracking-widest mt-1">Internal Strategic Audit</div>
+                        <div className="sm:text-right relative z-10">
+                            <div className="text-2xl lg:text-3xl font-black italic tracking-tighter leading-none">Elite <span className="text-emerald">Series</span></div>
+                            <div className="text-[9px] lg:text-[10px] opacity-30 uppercase font-black tracking-widest mt-2 lg:mt-1">Internal Strategic Audit</div>
                         </div>
                     </div>
 
-                    <div className="p-10">
-                        <table className="w-full text-left">
+                    <div className="p-6 lg:p-10 overflow-x-auto">
+                        <table className="w-full text-left whitespace-nowrap">
                             <thead className="bg-gray-50/50 rounded-2xl">
                                 <tr>
                                     <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Personnel Assets</th>
@@ -217,14 +217,14 @@ const Reports = () => {
                         </table>
                     </div>
 
-                    <div className="p-12 bg-gray-50 border-t border-charcoal/5 flex justify-between items-center px-16">
+                    <div className="p-8 lg:p-12 bg-gray-50 border-t border-charcoal/5 flex flex-col lg:flex-row lg:justify-between lg:items-center px-8 lg:px-16 gap-8">
                         <div className="flex flex-col">
                             <span className="font-black text-charcoal/30 uppercase tracking-[0.4em] text-[10px]">Aggregate Portfolio Disbursement</span>
-                            <span className="text-5xl font-black text-charcoal mt-2 italic tracking-tighter underline decoration-emerald decoration-8 underline-offset-8">
+                            <span className="text-3xl lg:text-5xl font-black text-charcoal mt-2 italic tracking-tighter underline decoration-emerald lg:decoration-8 underline-offset-8 decoration-4">
                                 RWF {data.reduce((acc, curr) => acc + parseFloat(curr.netSalary), 0).toLocaleString()}
                             </span>
                         </div>
-                        <div className="w-20 h-20 bg-emerald text-white rounded-2xl flex items-center justify-center text-3xl shadow-2xl shadow-emerald/40 rotate-12">
+                        <div className="w-16 h-16 lg:w-20 lg:h-20 bg-emerald text-white rounded-2xl flex items-center justify-center text-2xl lg:text-3xl shadow-2xl shadow-emerald/40 rotate-12 self-start lg:self-auto">
                             <FontAwesomeIcon icon={faGem} />
                         </div>
                     </div>

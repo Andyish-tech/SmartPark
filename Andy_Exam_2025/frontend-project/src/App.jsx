@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -12,6 +12,8 @@ import Dashboard from './pages/Dashboard';
 import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
@@ -22,12 +24,12 @@ function App() {
           path="/*"
           element={
             <ProtectedRoute>
-              <div className="flex bg-[#F8FAFC] min-h-screen">
+              <div className="flex bg-[#F8FAFC] min-h-screen relative overflow-x-hidden">
                 {/* Fixed Sidebar */}
-                <Navbar />
+                <Navbar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
 
-                {/* Main Content Area - Shifted to account for sidebar width */}
-                <main className="flex-1 ml-72 p-12 overflow-y-auto">
+                {/* Main Content Area - Shifted to account for sidebar width on large screens */}
+                <main className="flex-1 lg:ml-72 p-6 lg:p-12 transition-all duration-500">
                   <div className="max-w-7xl mx-auto">
                     <Routes>
                       <Route path="/dashboard" element={<Dashboard />} />

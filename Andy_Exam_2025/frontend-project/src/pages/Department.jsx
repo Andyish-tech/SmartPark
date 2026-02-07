@@ -47,20 +47,20 @@ const Department = () => {
     };
 
     return (
-        <div className="max-w-5xl mx-auto py-6">
-            <div className="flex justify-between items-end mb-12 border-b-2 border-charcoal/5 pb-8">
+        <div className="max-w-5xl mx-auto py-6 px-4 lg:px-0">
+            <div className="flex flex-col lg:flex-row lg:justify-between lg:items-end mb-12 border-b-2 border-charcoal/5 pb-8 gap-4">
                 <div>
-                    <h1 className="text-4xl font-black text-charcoal">Department <span className="text-emerald italic">Registry</span></h1>
+                    <h1 className="text-3xl lg:text-4xl font-black text-charcoal">Department <span className="text-emerald italic">Registry</span></h1>
                     <p className="text-charcoal/40 font-bold uppercase tracking-widest text-[10px] mt-2">Organizational Structural Architecture</p>
                 </div>
                 {message && (
-                    <div className="bg-softlime text-charcoal text-[10px] font-black px-6 py-2 rounded-full animate-bounce flex items-center gap-2">
+                    <div className="bg-softlime text-charcoal text-[10px] font-black px-6 py-2 rounded-full animate-bounce flex items-center gap-2 self-start lg:self-auto">
                         <FontAwesomeIcon icon={faCheckCircle} className="text-emerald" /> {message}
                     </div>
                 )}
             </div>
 
-            <div className="bg-white p-12 rounded-[40px] shadow-2xl shadow-charcoal/5 border border-charcoal/5 mb-12 relative overflow-hidden">
+            <div className="bg-white p-6 lg:p-12 rounded-[40px] shadow-2xl shadow-charcoal/5 border border-charcoal/5 mb-12 relative overflow-hidden">
                 <div className="absolute top-0 left-0 w-2 h-full bg-emerald"></div>
                 <h2 className="text-xl font-black text-charcoal mb-10 flex items-center gap-3 uppercase tracking-tight">
                     <FontAwesomeIcon icon={faBuilding} className="text-emerald" /> Configure New Business Unit
@@ -127,34 +127,36 @@ const Department = () => {
             </div>
 
             <div className="bg-white rounded-[40px] shadow-[0_40px_100px_rgba(0,0,0,0.05)] border border-charcoal/5 overflow-hidden">
-                <table className="w-full text-left">
-                    <thead className="bg-gray-50/50 border-b border-charcoal/5">
-                        <tr>
-                            <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Identification</th>
-                            <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Business Unit Title</th>
-                            <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Gross Asset Baseline</th>
-                            <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Liability Factor</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-50">
-                        {departments.map((dept) => (
-                            <tr key={dept.departmentCode} className="hover:bg-softlime/5 transition-colors group">
-                                <td className="p-8">
-                                    <span className="bg-charcoal text-white px-4 py-2 rounded-xl text-[10px] font-black tracking-widest shadow-md">
-                                        <FontAwesomeIcon icon={faFingerprint} className="mr-2 text-emerald" /> {dept.departmentCode}
-                                    </span>
-                                </td>
-                                <td className="p-8 font-black text-charcoal group-hover:text-emerald transition-colors">{dept.departmentName}</td>
-                                <td className="p-8 font-bold text-charcoal flex items-center gap-2">
-                                    <FontAwesomeIcon icon={faMoneyBillWave} className="text-emerald text-xs" /> RWF {parseFloat(dept.grossSalary).toLocaleString()}
-                                </td>
-                                <td className="p-8 text-red-400 font-bold">
-                                    <FontAwesomeIcon icon={faMinusCircle} className="mr-2 text-[10px]" /> RWF {parseFloat(dept.totalDeduction).toLocaleString()}
-                                </td>
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left whitespace-nowrap">
+                        <thead className="bg-gray-50/50 border-b border-charcoal/5">
+                            <tr>
+                                <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Identification</th>
+                                <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Business Unit Title</th>
+                                <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Gross Asset Baseline</th>
+                                <th className="p-8 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Liability Factor</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-50">
+                            {departments.map((dept) => (
+                                <tr key={dept.departmentCode} className="hover:bg-softlime/5 transition-colors group">
+                                    <td className="p-8">
+                                        <span className="bg-charcoal text-white px-4 py-2 rounded-xl text-[10px] font-black tracking-widest shadow-md">
+                                            <FontAwesomeIcon icon={faFingerprint} className="mr-2 text-emerald" /> {dept.departmentCode}
+                                        </span>
+                                    </td>
+                                    <td className="p-8 font-black text-charcoal group-hover:text-emerald transition-colors">{dept.departmentName}</td>
+                                    <td className="p-8 font-bold text-charcoal flex items-center gap-2">
+                                        <FontAwesomeIcon icon={faMoneyBillWave} className="text-emerald text-xs" /> RWF {parseFloat(dept.grossSalary).toLocaleString()}
+                                    </td>
+                                    <td className="p-8 text-red-400 font-bold">
+                                        <FontAwesomeIcon icon={faMinusCircle} className="mr-2 text-[10px]" /> RWF {parseFloat(dept.totalDeduction).toLocaleString()}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     );

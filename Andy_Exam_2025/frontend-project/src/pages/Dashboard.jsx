@@ -39,13 +39,13 @@ const Dashboard = () => {
     }, []);
 
     return (
-        <div className="max-w-6xl mx-auto py-6">
-            <div className="bg-white p-12 rounded-[32px] shadow-2xl shadow-emerald/5 border border-charcoal/5 mb-12 relative overflow-hidden">
+        <div className="max-w-6xl mx-auto py-6 px-4 lg:px-0">
+            <div className="bg-white p-8 lg:p-12 rounded-[32px] shadow-2xl shadow-emerald/5 border border-charcoal/5 mb-12 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-64 h-64 bg-emerald/5 rounded-full -mr-32 -mt-32 blur-3xl"></div>
                 <div className="relative z-10 flex items-center justify-between">
-                    <div>
-                        <h1 className="text-5xl font-black text-charcoal mb-4 tracking-tight">System <span className="text-emerald italic">Intelligence</span></h1>
-                        <p className="text-lg text-charcoal/60 max-w-2xl font-medium leading-relaxed">
+                    <div className="w-full">
+                        <h1 className="text-3xl lg:text-5xl font-black text-charcoal mb-4 tracking-tight leading-tight">System <span className="text-emerald italic">Intelligence</span></h1>
+                        <p className="text-sm lg:text-lg text-charcoal/60 max-w-2xl font-medium leading-relaxed">
                             Welcome to the elite command center. Orchestrate your human capital and
                             financial assets with the prestige of SmartPark engineering.
                         </p>
@@ -74,12 +74,12 @@ const Dashboard = () => {
                 </div>
             </div>
 
-            <div className="bg-white border border-charcoal/5 rounded-[40px] p-12 shadow-2xl shadow-charcoal/5">
+            <div className="bg-white border border-charcoal/5 rounded-[40px] p-8 lg:p-12 shadow-2xl shadow-charcoal/5">
                 <div className="flex items-center gap-4 mb-10">
                     <h2 className="text-2xl font-black text-charcoal tracking-tight shrink-0">Management <span className="text-emerald text-sm uppercase font-black ml-2 tracking-widest leading-none">Modules</span></h2>
                     <div className="h-0.5 flex-1 bg-charcoal/5 rounded-full"></div>
                 </div>
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 font-sans">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 font-sans">
                     {[
                         { to: "/employee", label: "Directory", icon: faUsers, sub: "Staff Registry" },
                         { to: "/department", label: "Units", icon: faBuilding, sub: "Org Setup" },
