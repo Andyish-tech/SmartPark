@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import * as XLSX from 'xlsx';
 import {
     faChartPie,
     faFileExport,
+    faFileExcel,
     faSearch,
     faCalendarAlt,
     faGem,
@@ -25,6 +27,30 @@ const Reports = () => {
         finally { setLoading(false); }
     };
 
+    const handleExportExcel = () => {
+        if (data.length === 0) return;
+
+        // Prepare data for Excel
+        const exportData = data.map(item => ({
+            'Personnel Name': `${item.firstName} ${item.lastName}`,
+            'Strategic Position': item.position,
+            'Business Unit': item.departmentName,
+            'Gross Asset (RWF)': parseFloat(item.grossSalary),
+            'Liability Factor (RWF)': parseFloat(item.totalDeduction),
+            'Net Disbursement (RWF)': parseFloat(item.netSalary)
+        }));
+
+        // Create worksheet
+        const ws = XLSX.utils.json_to_sheet(exportData);
+
+        // Create workbook
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Payroll Audit");
+
+        // Generate file and trigger download
+        XLSX.writeFile(wb, `EPMS_Payroll_Audit_${month}.xlsx`);
+    };
+
     return (
         <div className="max-w-5xl mx-auto py-6">
             <div className="mb-12 flex justify-between items-end border-b-2 border-charcoal/5 pb-8">
@@ -32,9 +58,18 @@ const Reports = () => {
                     <h1 className="text-4xl font-black text-charcoal uppercase tracking-tighter">Executive <span className="text-emerald italic">Analytics</span></h1>
                     <p className="text-charcoal/40 font-bold uppercase tracking-widest text-[10px] mt-2">Strategic Payroll Audit Portfolio</p>
                 </div>
-                <button className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center gap-2 px-4 py-2 bg-emerald/5 rounded-lg" onClick={() => window.print()}>
-                    <FontAwesomeIcon icon={faFileExport} /> Export Statement
-                </button>
+                <div className="flex gap-4">
+                    <button
+                        className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center gap-2 px-4 py-2 bg-emerald/5 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed"
+                        onClick={handleExportExcel}
+                        disabled={data.length === 0}
+                    >
+                        <FontAwesomeIcon icon={faFileExcel} /> Export to Excel
+                    </button>
+                    <button className="text-[10px] font-black uppercase tracking-[0.2em] text-emerald hover:text-charcoal transition-colors flex items-center gap-2 px-4 py-2 bg-emerald/5 rounded-lg" onClick={() => window.print()}>
+                        <FontAwesomeIcon icon={faFileExport} /> Export Statement
+                    </button>
+                </div>
             </div>
 
             <div className="bg-white p-8 rounded-[36px] shadow-2xl shadow-charcoal/5 border border-charcoal/5 mb-12 flex flex-col md:flex-row items-center gap-8">
