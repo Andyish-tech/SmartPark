@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import api from '../services/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faLock, faShieldAlt, faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 
 const Login = () => {
     const [username, setUsername] = useState('');
@@ -34,33 +36,46 @@ const Login = () => {
 
                     {error && (
                         <div className="bg-red-50 border-l-4 border-red-500 text-red-700 p-4 rounded-lg mb-8 text-xs font-bold flex items-center animate-shake">
-                            <span className="mr-3 text-lg">⚠️</span> {error}
+                            <FontAwesomeIcon icon={faExclamationTriangle} className="mr-3 text-lg" /> {error}
                         </div>
                     )}
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                         <div>
                             <label className="block text-charcoal text-[10px] font-black uppercase tracking-[0.2em] mb-2 px-1">Identity</label>
-                            <input
-                                type="text"
-                                className="w-full bg-gray-50 px-6 py-4 rounded-2xl border-2 border-transparent focus:border-emerald focus:bg-white outline-none transition-all duration-300 font-bold text-charcoal"
-                                placeholder="Username"
-                                value={username}
-                                onChange={(e) => setUsername(e.target.value)}
-                                required
-                            />
+                            <div className="relative">
+                                <FontAwesomeIcon icon={faUser} className="absolute left-5 top-1/2 -translate-y-1/2 text-charcoal/20" />
+                                <input
+                                    type="text"
+                                    className="w-full bg-gray-50 pl-12 pr-6 py-4 rounded-2xl border-2 border-transparent focus:border-emerald focus:bg-white outline-none transition-all duration-300 font-bold text-charcoal"
+                                    placeholder="Username"
+                                    value={username}
+                                    onChange={(e) => setUsername(e.target.value)}
+                                    required
+                                />
+                            </div>
                         </div>
                         <div>
                             <label className="block text-charcoal text-[10px] font-black uppercase tracking-[0.2em] mb-2 px-1">Passkey</label>
-                            <input
-                                type="password"
-                                className="w-full bg-gray-50 px-6 py-4 rounded-2xl border-2 border-transparent focus:border-emerald focus:bg-white outline-none transition-all duration-300 font-bold text-charcoal"
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
+                            <div className="relative">
+                                <FontAwesomeIcon icon={faLock} className="absolute left-5 top-1/2 -translate-y-1/2 text-charcoal/20" />
+                                <input
+                                    type="password"
+                                    className="w-full bg-gray-50 pl-12 pr-6 py-4 rounded-2xl border-2 border-transparent focus:border-emerald focus:bg-white outline-none transition-all duration-300 font-bold text-charcoal"
+                                    placeholder="••••••••"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                            </div>
                         </div>
+
+                        <div className="flex justify-end">
+                            <Link to="/forgot-password" size="sm" className="text-[10px] font-black uppercase tracking-widest text-emerald hover:text-charcoal transition-colors">
+                                Forgot Credential?
+                            </Link>
+                        </div>
+
                         <button
                             type="submit"
                             className="w-full bg-charcoal text-white font-black py-5 rounded-2xl hover:bg-emerald transition-all duration-500 shadow-xl shadow-charcoal/20 transform hover:-translate-y-1 active:scale-95 text-lg"
@@ -70,8 +85,8 @@ const Login = () => {
                     </form>
 
                     <div className="mt-12 text-center">
-                        <p className="text-[10px] text-charcoal/20 uppercase font-black tracking-[0.3em]">
-                            Secured by Bcrypt Architecture
+                        <p className="text-[10px] text-charcoal/20 uppercase font-black tracking-[0.3em] flex items-center justify-center gap-2">
+                            <FontAwesomeIcon icon={faShieldAlt} /> Secured by Bcrypt Architecture
                         </p>
                     </div>
                 </div>

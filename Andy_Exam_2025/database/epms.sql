@@ -49,11 +49,17 @@ CREATE TABLE IF NOT EXISTS Salary (
 CREATE TABLE IF NOT EXISTS Users (
     userId INT AUTO_INCREMENT PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
+    password VARCHAR(255) NOT NULL,
+    security_question VARCHAR(255) DEFAULT 'What is your favorite color?',
+    security_answer VARCHAR(255) DEFAULT 'Emerald'
 );
 
 -- Seed Data for Users (admin / admin123)
-INSERT INTO Users (username, password) VALUES
-('admin', '$2b$10$v4PS0hXVckkf5yt5SGA6X.tLBUE/jD4XVoilTeZIbfYK3bgTELRA.')
-ON DUPLICATE KEY UPDATE password = VALUES(password);
+-- Question: What is your favorite color? Answer: Emerald
+INSERT INTO Users (username, password, security_question, security_answer) VALUES
+('admin', '$2b$10$v4PS0hXVckkf5yt5SGA6X.tLBUE/jD4XVoilTeZIbfYK3bgTELRA.', 'What is your favorite color?', 'Emerald')
+ON DUPLICATE KEY UPDATE 
+    password = VALUES(password),
+    security_question = VALUES(security_question),
+    security_answer = VALUES(security_answer);
 

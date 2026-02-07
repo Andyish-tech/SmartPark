@@ -9,6 +9,7 @@ import Employee from './pages/Employee';
 import Salary from './pages/Salary';
 import Reports from './pages/Reports';
 import Dashboard from './pages/Dashboard';
+import ForgotPassword from './pages/ForgotPassword';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="/*"
           element={
