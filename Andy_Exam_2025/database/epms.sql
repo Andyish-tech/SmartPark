@@ -51,3 +51,9 @@ CREATE TABLE IF NOT EXISTS Users (
     username VARCHAR(50) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL
 );
+
+-- Seed Data for Users (admin / admin123)
+INSERT INTO Users (username, password) VALUES
+('admin', '$2b$10$AmuQhOLh2oZWTqfG5Mv5hv0StcjSvoD8Hk8qy')
+ON DUPLICATE KEY UPDATE password = VALUES(password);
+
