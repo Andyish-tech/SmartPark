@@ -12,7 +12,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await api.post('/login', { username, password });
-            navigate('/employee');
+            navigate('/dashboard');
         } catch (err) {
             setError(err.response?.data?.error || 'Login failed');
         }

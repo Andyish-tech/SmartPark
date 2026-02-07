@@ -7,11 +7,14 @@ import Department from './pages/Department';
 import Employee from './pages/Employee';
 import Salary from './pages/Salary';
 import Reports from './pages/Reports';
+import Dashboard from './pages/Dashboard';
+import Landing from './pages/Landing';
 
 function App() {
   return (
     <Router future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
+        <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route
           path="/*"
@@ -21,11 +24,12 @@ function App() {
                 <Navbar />
                 <main className="container mx-auto p-4">
                   <Routes>
+                    <Route path="/dashboard" element={<Dashboard />} />
                     <Route path="/department" element={<Department />} />
                     <Route path="/employee" element={<Employee />} />
                     <Route path="/salary" element={<Salary />} />
                     <Route path="/reports" element={<Reports />} />
-                    <Route path="*" element={<Navigate to="/employee" />} />
+                    <Route path="*" element={<Navigate to="/dashboard" />} />
                   </Routes>
                 </main>
               </div>

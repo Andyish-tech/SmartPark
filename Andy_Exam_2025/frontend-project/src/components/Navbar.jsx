@@ -17,8 +17,9 @@ const Navbar = () => {
     return (
         <nav className="bg-indigo-600 text-white p-4 shadow-lg mb-6">
             <div className="container mx-auto flex justify-between items-center">
-                <Link to="/" className="text-2xl font-bold">EPMS</Link>
-                <div className="space-x-6 flex items-center">
+                <Link to="/dashboard" className="text-2xl font-bold italic tracking-tighter text-indigo-100 hover:text-white transition">SmartPark <span className="text-white">EPMS</span></Link>
+                <div className="space-x-6 flex items-center text-sm font-medium">
+                    <Link to="/dashboard" className="hover:text-indigo-200 transition">Dashboard</Link>
                     <Link to="/employee" className="hover:text-indigo-200 transition">Employees</Link>
                     <Link to="/department" className="hover:text-indigo-200 transition">Departments</Link>
                     <Link to="/salary" className="hover:text-indigo-200 transition">Salaries</Link>

@@ -1,10 +1,20 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        emerald: '#50C878',
+        charcoal: '#36454F',
+        softlime: '#D1FFBD',
+      },
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+      }
+    },
   },
   plugins: [],
 }
