@@ -68,7 +68,7 @@ const Dashboard = () => {
                 </div>
                 <div className="bg-white p-9 rounded-3xl shadow-xl border border-charcoal/5 text-charcoal relative group overflow-hidden">
                     <FontAwesomeIcon icon={faMoneyBillWave} className="absolute -right-4 -bottom-4 text-charcoal/5 text-9xl transition-transform group-hover:scale-110" />
-                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-emerald mb-1">Treasury</h3>
+                    <h3 className="text-xs font-black uppercase tracking-[0.2em] text-emerald mb-1">Salary</h3>
                     <p className="text-5xl font-black mb-1 text-charcoal">{stats.salaries}</p>
                     <p className="text-xs font-bold text-charcoal/40 uppercase tracking-widest">Assets Disbursed</p>
                 </div>

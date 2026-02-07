@@ -28,7 +28,7 @@ const Navbar = () => {
         { to: "/dashboard", label: "Dashboard", icon: faThLarge },
         { to: "/employee", label: "Personnel", icon: faUsers },
         { to: "/department", label: "Departments", icon: faBuilding },
-        { to: "/salary", label: "Treasury", icon: faMoneyBillWave },
+        { to: "/salary", label: "Salary", icon: faMoneyBillWave },
         { to: "/reports", label: "Analytics", icon: faChartBar },
     ];
 
@@ -51,8 +51,8 @@ const Navbar = () => {
                             key={link.to}
                             to={link.to}
                             className={`flex items-center gap-4 px-6 py-4 rounded-2xl transition-all duration-300 group ${isActive
-                                    ? 'bg-emerald text-white shadow-lg shadow-emerald/30'
-                                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                                ? 'bg-emerald text-white shadow-lg shadow-emerald/30'
+                                : 'text-white/60 hover:text-white hover:bg-white/5'
                                 }`}
                         >
                             <FontAwesomeIcon

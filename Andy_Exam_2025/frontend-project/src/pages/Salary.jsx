@@ -60,7 +60,7 @@ const Salary = () => {
     return (
         <div className="max-w-6xl mx-auto py-6 pb-20">
             <div className="mb-12 border-b-2 border-charcoal/5 pb-8">
-                <h1 className="text-4xl font-black text-charcoal uppercase tracking-tighter">Treasury <span className="text-emerald italic">Disbursements</span></h1>
+                <h1 className="text-4xl font-black text-charcoal uppercase tracking-tighter">Salary <span className="text-emerald italic">Disbursements</span></h1>
                 <p className="text-charcoal/40 font-bold uppercase tracking-widest text-[10px] mt-2">Executive Financial Payroll Operations Portfolio</p>
             </div>
 
