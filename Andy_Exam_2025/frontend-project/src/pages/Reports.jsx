@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
 import {
     faChartPie,
     faFileExport,
@@ -27,28 +28,105 @@ const Reports = () => {
         finally { setLoading(false); }
     };
 
-    const handleExportExcel = () => {
+    const handleExportExcel = async () => {
         if (data.length === 0) return;
 
-        // Prepare data for Excel
-        const exportData = data.map(item => ({
-            'Personnel Name': `${item.firstName} ${item.lastName}`,
-            'Strategic Position': item.position,
-            'Business Unit': item.departmentName,
-            'Gross Asset (RWF)': parseFloat(item.grossSalary),
-            'Liability Factor (RWF)': parseFloat(item.totalDeduction),
-            'Net Disbursement (RWF)': parseFloat(item.netSalary)
-        }));
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Executive Audit');
 
-        // Create worksheet
-        const ws = XLSX.utils.json_to_sheet(exportData);
+        // Column Definitions
+        worksheet.columns = [
+            { header: 'PERSONNEL ASSET', key: 'name', width: 35 },
+            { header: 'STRATEGIC POSITION', key: 'pos', width: 25 },
+            { header: 'BUSINESS UNIT', key: 'dept', width: 20 },
+            { header: 'GROSS ASSET (RWF)', key: 'gross', width: 22 },
+            { header: 'LIABILITY FACTOR (RWF)', key: 'ded', width: 22 },
+            { header: 'NET DISBURSEMENT (RWF)', key: 'net', width: 25 }
+        ];
 
-        // Create workbook
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Payroll Audit");
+        // 1. Formal Branding Header
+        const headerRow = worksheet.insertRow(1, ["SMARTPARK EPMS - ELITE SERIES v2.9"]);
+        const subHeaderRow = worksheet.insertRow(2, ["EXECUTIVE STRATEGIC PAYROLL AUDIT PORTFOLIO"]);
+        const fiscalRow = worksheet.insertRow(3, [`FISCAL PERIOD: ${month}`]);
+        const timeRow = worksheet.insertRow(4, [`GENERATED: ${new Date().toLocaleString()}`]);
+        worksheet.insertRow(5, []); // Spacer
 
-        // Generate file and trigger download
-        XLSX.writeFile(wb, `EPMS_Payroll_Audit_${month}.xlsx`);
+        // Style the Branding Header (Charcoal theme)
+        [headerRow, subHeaderRow, fiscalRow, timeRow].forEach((row, i) => {
+            row.eachCell(cell => {
+                cell.font = { name: 'Arial', size: i === 0 ? 14 : 9, bold: true, color: { argb: 'FFFFFFFF' } };
+                cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF36454F' } };
+                cell.alignment = { horizontal: 'center', vertical: 'middle' };
+            });
+            worksheet.mergeCells(row.number, 1, row.number, 6);
+        });
+
+        // 2. Data Table Header Styling (Emerald theme)
+        const tableHeader = worksheet.getRow(6);
+        tableHeader.values = ["PERSONNEL ASSET", "STRATEGIC POSITION", "BUSINESS UNIT", "GROSS ASSET (RWF)", "LIABILITY (RWF)", "NET VALUE (RWF)"];
+        tableHeader.eachCell(cell => {
+            cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 10 };
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF50C878' } };
+            cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' } };
+            cell.alignment = { horizontal: 'center', vertical: 'middle' };
+        });
+
+        // 3. Populate Data with defensive numerical sanitization
+        data.forEach(item => {
+            const row = worksheet.addRow([
+                `${item.firstName} ${item.lastName}`,
+                item.position,
+                item.departmentName,
+                Number(item.grossSalary) || 0,
+                Number(item.totalDeduction) || 0,
+                Number(item.netSalary) || 0
+            ]);
+            row.eachCell(cell => {
+                cell.border = { top: { style: 'thin' }, bottom: { style: 'thin' }, left: { style: 'thin' }, right: { style: 'thin' } };
+                cell.font = { size: 10 };
+                if (typeof cell.value === 'number') {
+                    cell.numFmt = '#,##0';
+                    cell.alignment = { horizontal: 'right' };
+                }
+            });
+        });
+
+        // 4. Financial Summary Footer (Aligned with columns)
+        const totalNet = data.reduce((acc, curr) => acc + (Number(curr.netSalary) || 0), 0);
+        const totalGross = data.reduce((acc, curr) => acc + (Number(curr.grossSalary) || 0), 0);
+        const totalDeductions = data.reduce((acc, curr) => acc + (Number(curr.totalDeduction) || 0), 0);
+
+        worksheet.addRow([]); // Spacer
+        const summaryTitle = worksheet.addRow(["EXECUTIVE FINANCIAL PORTFOLIO SUMMARY"]);
+        worksheet.mergeCells(summaryTitle.number, 1, summaryTitle.number, 6);
+        summaryTitle.eachCell(cell => {
+            cell.font = { bold: true, color: { argb: 'FFFFFFFF' }, size: 11 };
+            cell.fill = { type: 'pattern', pattern: 'solid', fgColor: { argb: 'FF36454F' } };
+            cell.alignment = { horizontal: 'center' };
+        });
+
+        // Aligned Totals
+        const grossSum = worksheet.addRow(["", "", "TOTAL AGGREGATE GROSS VALUE", totalGross, "", ""]);
+        const dedSum = worksheet.addRow(["", "", "TOTAL AGGREGATE LIABILITIES", "", totalDeductions, ""]);
+        const netSum = worksheet.addRow(["", "", "TOTAL NET DISBURSEMENT", "", "", totalNet]);
+
+        [grossSum, dedSum, netSum].forEach(row => {
+            row.eachCell((cell, colNumber) => {
+                if (colNumber === 3) {
+                    cell.font = { bold: true, size: 10 };
+                    cell.alignment = { horizontal: 'right' };
+                }
+                if (typeof cell.value === 'number') {
+                    cell.numFmt = '#,##0';
+                    cell.font = { bold: true, color: { argb: 'FF50C878' }, size: 11 };
+                    cell.alignment = { horizontal: 'right' };
+                }
+            });
+        });
+
+        // 5. Final Dispatch
+        const buffer = await workbook.xlsx.writeBuffer();
+        saveAs(new Blob([buffer]), `SmartPark_Elite_Audit_${month}.xlsx`);
     };
 
     return (
@@ -117,6 +195,8 @@ const Reports = () => {
                                     <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Personnel Assets</th>
                                     <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Strategic Post</th>
                                     <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px]">Business Unit</th>
+                                    <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px] text-right">Gross Asset</th>
+                                    <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px] text-right">Liability</th>
                                     <th className="p-6 font-black text-charcoal/30 uppercase tracking-[0.2em] text-[10px] text-right">Net Value</th>
                                 </tr>
                             </thead>
@@ -128,6 +208,8 @@ const Reports = () => {
                                         <td className="p-6">
                                             <span className="bg-emerald/5 text-emerald px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest border border-emerald/10">{row.departmentName}</span>
                                         </td>
+                                        <td className="p-6 font-bold text-charcoal/40 text-right text-xs tracking-tighter">RWF {parseFloat(row.grossSalary).toLocaleString()}</td>
+                                        <td className="p-6 text-red-400 font-bold text-right text-xs tracking-tighter italic">- RWF {parseFloat(row.totalDeduction).toLocaleString()}</td>
                                         <td className="p-6 font-black text-charcoal text-right text-xl tracking-tighter">RWF {parseFloat(row.netSalary).toLocaleString()}</td>
                                     </tr>
                                 ))}

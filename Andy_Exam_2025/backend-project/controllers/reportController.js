@@ -9,6 +9,8 @@ exports.getPayrollReport = async (req, res) => {
                 e.lastName, 
                 e.position, 
                 d.departmentName, 
+                s.grossSalary,
+                s.totalDeduction,
                 s.netSalary
             FROM Salary s
             JOIN Employee e ON s.employeeNumber = e.employeeNumber
